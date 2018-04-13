@@ -14,10 +14,12 @@ class UsersController extends Controller
     {
         return view('users.create');
     }
+
     public function show(User $user)
     {
-        return view('users.show',compact('user'));
+        return view('users.show', compact('user'));
     }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -28,12 +30,12 @@ class UsersController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'email'=> $request->email,
-            'password'=> bcrypt($request->password),
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
         ]);
 
         Auth::login($user);
-        sesstion()-flash('success','欢迎，即将在这里开启一段新的旅程~');
-        return redirect()->route('users.show',[$user]);
+        session()->flash('success', '欢迎，您将在这里开启一段新的旅程~');
+        return redirect()->route('users.show', [$user]);
     }
 }
